@@ -96,6 +96,30 @@ With 4GB VRAM, throughput is mostly limited by **KV cache + concurrency**. Main 
 
 ---
 
+## Getting started — Milestone 1 (baseline serving)
+
+1. **Install vLLM** (GPU with CUDA required):
+   ```bash
+   pip install vllm
+   # or from repo: pip install -e ".[worker]"
+   ```
+
+2. **Start the vLLM worker** (in one terminal):
+   ```bash
+   ./scripts/run_vllm_worker.sh
+   ```
+   Uses `Qwen/Qwen2.5-0.5B-Instruct` by default with `--max-model-len 512` and `--gpu-memory-utilization 0.9`. Override with `VLLM_MODEL` or pass the model as first argument.
+
+3. **Run the smoke test** (in another terminal):
+   ```bash
+   ./scripts/smoke_test.sh
+   ```
+   Sends one chat completion request and verifies the response.
+
+See **[docs/vllm-serve-args.md](docs/vllm-serve-args.md)** for CLI argument reference.
+
+---
+
 ## Project Structure (Planned)
 
 See **[docs/plan.md](docs/plan.md)** for the full milestone to-do list, detailed directory layout, conventions, and critical review. Summary:

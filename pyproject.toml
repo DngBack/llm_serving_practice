@@ -1,0 +1,18 @@
+[project]
+name = "rtx3050-llm-throughput-lab"
+version = "0.1.0"
+description = "LLM serving throughput lab for RTX 3050 4GB"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+# Worker: run vLLM serve (Milestone 1+). Install with: pip install -e ".[worker]"
+worker = ["vllm>=0.6.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

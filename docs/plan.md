@@ -28,14 +28,14 @@ Each milestone has a clear output. Documentation links support learning and tuni
 
 **To-do**
 
-- [ ] Run **vLLM serve** with a ~0.5–0.6B model
-- [ ] Set `--max-model-len 512` for 4GB
-- [ ] Use `--gpu-memory-utilization 0.9` (default) to maximize KV cache usage
-- [ ] Run one request end-to-end (functional smoke test)
+- [x] Run **vLLM serve** with a ~0.5–0.6B model
+- [x] Set `--max-model-len 512` for 4GB
+- [x] Use `--gpu-memory-utilization 0.9` (default) to maximize KV cache usage
+- [x] Run one request end-to-end (functional smoke test)
 
 **Documentation**
 
-- vLLM serve CLI args: `max-model-len`, `gpu-memory-utilization`, etc.
+- [vLLM serve CLI args](vllm-serve-args.md): `max-model-len`, `gpu-memory-utilization`, etc.
 
 ---
 
