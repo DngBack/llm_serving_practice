@@ -98,14 +98,13 @@ With 4GB VRAM, throughput is mostly limited by **KV cache + concurrency**. Main 
 
 ## Project Structure (Planned)
 
-```
-.
-├── gateway/          # API gateway, rate limiting, admission control
-├── queue/            # Request queue and batching logic
-├── supervisor/       # Scale-to-zero control plane
-├── worker/           # Model worker (vLLM) config and launcher
-├── benchmark/        # Harness and tuning playbook
-├── observability/    # Metrics and dashboards
-└── docs/             # Tuning notes and SLO definitions
-```
+See **[docs/plan.md](docs/plan.md)** for the full milestone to-do list, detailed directory layout, conventions, and critical review. Summary:
+
+- **`src/rtx3050_llm_lab/`** — gateway, supervisor, queue, client, observability
+- **`configs/`** — model profiles and fixed prompts
+- **`infra/`** — Docker, Compose, Prometheus, Grafana
+- **`loadtest/`** — Locust/k6 scenarios
+- **`experiments/`** — benchmark run outputs
+- **`scripts/`** — bench, grid tuning, smoke test
+- **`docs/`** — plan, SLO, tuning notes
 
