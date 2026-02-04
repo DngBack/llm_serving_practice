@@ -1,2 +1,5 @@
 # Using Python 3.11.14
 vllm==0.15.0
+
+# Load-test harness
+locust>=2.0

@@ -43,10 +43,10 @@ Each milestone has a clear output. Documentation links support learning and tuni
 
 **To-do**
 
-- [ ] Implement load-test script:
+- [x] Implement load-test script:
   - Constant arrival rate (ramp up gradually)
   - Fixed prompt/output (200/200)
-- [ ] Collect metrics: **RPS**, **p50/p95 latency**, **error rate**
+- [x] Collect metrics: **RPS**, **p50/p95 latency**, **error rate**
 
 **Documentation (pick one)**
 

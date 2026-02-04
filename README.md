@@ -120,6 +120,17 @@ See **[docs/vllm-serve-args.md](docs/vllm-serve-args.md)** for CLI argument refe
 
 ---
 
+## Milestone 2 — Load-testing harness
+
+1. **Install Locust:** `pip install locust` (or use `requirements.txt`).
+2. **Start vLLM** (as above), then run the load test:
+   ```bash
+   ./scripts/run_loadtest.sh
+   ```
+   Or run Locust manually (e.g. UI on port 8089 or headless with `-u`, `-r`, `--run-time`). See **[loadtest/README.md](loadtest/README.md)** for options, ramp-up shape, and how to read **RPS**, **p50/p95 latency**, and **error rate**.
+
+---
+
 ## Project Structure (Planned)
 
 See **[docs/plan.md](docs/plan.md)** for the full milestone to-do list, detailed directory layout, conventions, and critical review. Summary:
