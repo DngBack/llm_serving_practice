@@ -1,2 +1,111 @@
-# llm_serving_practice
-A hands-on pet project to learn LLM serving design by building a small LLMOps stack
+# rtx3050-llm-throughput-lab
+
+A hands-on pet project to learn LLM serving design by building a small LLMOps stack that **maximizes throughput (requests/sec)** on a single **RTX 3050 4GB GPU**, using a ~0.6B model and a fixed workload: **200 input tokens + 200 output tokens**.
+
+---
+
+## Motivation
+
+When GPU memory is small (4GB) and traffic is bursty, the hard problems are:
+
+- **Keeping GPU utilization high** without blowing up latency.
+- **Controlling KV-cache growth** by constraining context and concurrency.
+- **Handling bursts safely** via queuing, micro-batching, and admission control.
+- **Scale-to-zero:** automatically stop the model worker when idle, and restart it on demand.
+
+This repo is a practical learning exercise focused on measurable performance, not a full production platform.
+
+---
+
+## Goals
+
+### Primary goal
+
+Maximize **sustained throughput (RPS)** for the fixed workload (200-in / 200-out) while meeting a defined SLO:
+
+- Example SLO: **p95 latency ≤ 5s**, **error rate ≤ 0.1%** (tunable).
+
+### Secondary goals
+
+- Implement **scale-to-zero** (auto stop/start the model worker) based on request demand.
+- Provide a **repeatable benchmark harness** and tuning playbook.
+- Build an **observable system** (metrics + dashboards) to support engineering-style iteration.
+
+### Non-goals
+
+- Multi-GPU scheduling.
+- Training or fine-tuning.
+- Complex auth/billing/multi-tenant isolation.
+- “Best model quality” tuning (focus is on throughput and stability).
+
+---
+
+## System Overview
+
+### Components
+
+| Component | Role |
+|-----------|------|
+| **Gateway API** (always-on) | Receives requests, validates payloads, implements rate limiting and admission control. |
+| **Queue** | Buffers bursts and allows controlled batching. |
+| **Supervisor** (control plane) | Starts/stops the model worker (scale-to-zero) and enforces policies. |
+| **Model Worker** (data plane) | Runs an inference engine (e.g. **vLLM** server) with continuous batching knobs. |
+
+### Model worker knobs (vLLM-style)
+
+- `--max-model-len` — Controls model context length (prompt + output).
+- `--gpu-memory-utilization` — Caps fraction of GPU memory used (default 0.9).
+- `--max-num-seqs` and `--max-num-batched-tokens` — Control concurrency and token budget per scheduling step.
+
+### Why micro-batching?
+
+Micro-batching increases throughput by combining requests into batches, similar to dynamic batching patterns used in NVIDIA Triton Inference Server.
+
+### Scale-to-zero concept
+
+This project implements **scale-to-zero** locally (process start/stop). For reference, [Knative Serving](https://knative.dev/docs/serving/) describes scale-to-zero as scaling replicas down to zero when no traffic exists.
+
+---
+
+## Default Workload
+
+- **Prompt length:** ~200 tokens  
+- **Generation length:** ~200 tokens  
+- **Sampling:** Deterministic for stable benchmarks (e.g. `temperature=0`)
+
+---
+
+## Suggested Baseline Model
+
+A small instruct model around **0.5–0.6B parameters**, e.g. **Qwen2.5-0.5B-Instruct**.
+
+The project is model-agnostic; you can swap models as long as the server supports them.
+
+---
+
+## Key Performance Levers
+
+With 4GB VRAM, throughput is mostly limited by **KV cache + concurrency**. Main design levers:
+
+| Lever | Effect |
+|-------|--------|
+| **Max context (`max_model_len`)** | Lower context → less KV cache → higher concurrency. |
+| **Concurrency cap (`max_num_seqs`)** | More sequences → higher throughput until KV cache/VRAM causes OOM or p95 latency spikes. |
+| **Token budget per step (`max_num_batched_tokens`)** | Increasing improves throughput but can worsen token latency. |
+| **Micro-batching window** | A small delay (e.g. 10–30 ms) to collect requests into a batch. |
+
+---
+
+## Project Structure (Planned)
+
+```
+.
+├── gateway/          # API gateway, rate limiting, admission control
+├── queue/            # Request queue and batching logic
+├── supervisor/       # Scale-to-zero control plane
+├── worker/           # Model worker (vLLM) config and launcher
+├── benchmark/        # Harness and tuning playbook
+├── observability/    # Metrics and dashboards
+└── docs/             # Tuning notes and SLO definitions
+```
+
