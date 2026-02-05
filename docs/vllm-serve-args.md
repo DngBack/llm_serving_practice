@@ -1,6 +1,6 @@
 # vLLM serve CLI args (Milestone 1)
 
-Reference for the key arguments used in baseline serving on RTX 3050 4GB.
+Reference for the key arguments used in baseline serving on a small GPU.
 
 ## Command
 

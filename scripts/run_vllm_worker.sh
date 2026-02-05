@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Milestone 1: Run vLLM serve with baseline settings for RTX 3050 4GB.
+# Milestone 1: Run vLLM serve with baseline settings for small GPU (e.g. 4GB VRAM).
 # Usage: ./scripts/run_vllm_worker.sh [MODEL]
 #   MODEL defaults to Qwen/Qwen2.5-0.5B-Instruct (or VLLM_MODEL env var).
 #

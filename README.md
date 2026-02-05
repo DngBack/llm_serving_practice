@@ -1,6 +1,6 @@
-# rtx3050-llm-throughput-lab
+# llm-throughput-lab
 
-A hands-on pet project to learn LLM serving design by building a small LLMOps stack that **maximizes throughput (requests/sec)** on a single **RTX 3050 4GB GPU**, using a ~0.6B model and a fixed workload: **200 input tokens + 200 output tokens**.
+A hands-on pet project to learn LLM serving design by building a small LLMOps stack that **maximizes throughput (requests/sec)** on a single GPU, using a ~0.6B model and a fixed workload: **200 input tokens + 200 output tokens**.
 
 ---
 
@@ -131,11 +131,26 @@ See **[docs/vllm-serve-args.md](docs/vllm-serve-args.md)** for CLI argument refe
 
 ---
 
+## Milestone 3 — Observability
+
+1. **Start vLLM** (as above), then **start monitoring**:
+   ```bash
+   ./scripts/run_monitoring.sh
+   ```
+2. **Access:**
+   - Prometheus: http://localhost:9090
+   - Grafana: http://localhost:3000 (admin/admin)
+3. Dashboard **"vLLM Lab — M3 Observability"** shows: latency (p50/p95), RPS, queue depth, in-flight requests, worker state, success counters.
+
+See **[docs/milestone3-guide.md](docs/milestone3-guide.md)** for detailed implementation guide (Vietnamese).
+
+---
+
 ## Project Structure (Planned)
 
 See **[docs/plan.md](docs/plan.md)** for the full milestone to-do list, detailed directory layout, conventions, and critical review. Summary:
 
-- **`src/rtx3050_llm_lab/`** — gateway, supervisor, queue, client, observability
+- **`src/llm_throughput_lab/`** — gateway, supervisor, queue, client, observability
 - **`configs/`** — model profiles and fixed prompts
 - **`infra/`** — Docker, Compose, Prometheus, Grafana
 - **`loadtest/`** — Locust/k6 scenarios

@@ -1,6 +1,6 @@
-# rtx3050-llm-throughput-lab — Plan & Milestones
+# llm-throughput-lab — Plan & Milestones
 
-This document defines the **milestone to-do list**, **repository structure**, **conventions**, and a **critical review** so the project stays focused and implementable on a single RTX 3050 4GB GPU.
+This document defines the **milestone to-do list**, **repository structure**, **conventions**, and a **critical review** so the project stays focused and implementable on a single GPU.
 
 ---
 
@@ -169,14 +169,14 @@ This keeps policy and scaling logic out of the inference path and makes tuning a
 Keep **source code** separate from **config**, **infra**, and **experiments**.
 
 ```
-rtx3050-llm-throughput-lab/
+llm-throughput-lab/
 ├── README.md
 ├── pyproject.toml
 ├── .gitignore
 ├── .env.example
 │
 ├── src/
-│   └── rtx3050_llm_lab/
+│   └── llm_throughput_lab/
 │       ├── __init__.py
 │       ├── gateway/                 # FastAPI entry + routes
 │       │   ├── app.py               # create_app(), lifespan
@@ -280,7 +280,7 @@ Use multiple modules (e.g. `app.py`, `routes.py`, `schemas.py`, `settings.py`) a
 
 | Thing              | Convention |
 |--------------------|------------|
-| Python package     | `rtx3050_llm_lab` |
+| Python package     | `llm_throughput_lab` |
 | Compose services   | `gateway`, `supervisor`, `redis`, `worker`, `prometheus`, `grafana` |
 | Model profiles     | `throughput`, `aggressive`, `safe` |
 | Experiment output  | `YYYY-MM-DD_runXX_<profile>.json` |
