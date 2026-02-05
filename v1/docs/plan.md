@@ -4,6 +4,16 @@ This document defines the **milestone to-do list**, **repository structure**, **
 
 ---
 
+## Version 1 vs Version 2
+
+| | **V1** (root) | **V2** (v2/) |
+|---|---------------|--------------|
+| Chạy | Process (scripts) | Docker + Kubernetes |
+| Scale | Supervisor spawn/kill | K8s HPA |
+| Hướng dẫn | [docs/run-guide.md](docs/run-guide.md) | [v2/docs/run-guide-v2.md](v2/docs/run-guide-v2.md) |
+
+---
+
 ## 1. Milestones (To-Do + Documentation)
 
 Each milestone has a clear output. Documentation links support learning and tuning.

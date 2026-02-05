@@ -1,0 +1,49 @@
+# v2: vLLM Worker Deployment — GPU inference
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: llm-lab
+  labels:
+    app: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: llm-worker:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VLLM_MODEL
+              value: "Qwen/Qwen2.5-0.5B-Instruct"
+            - name: VLLM_MAX_NUM_SEQS
+              value: "64"
+            - name: VLLM_GPU_MEMORY_UTILIZATION
+              value: "0.85"
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+              memory: 6Gi
+            requests:
+              memory: 4Gi
+          livenessProbe:
+            httpGet:
+              path: /v1/models
+              port: 8000
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /v1/models
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10

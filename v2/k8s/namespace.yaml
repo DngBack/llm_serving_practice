@@ -1,0 +1,8 @@
+# v2: Namespace for llm-lab
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: llm-lab
+  labels:
+    app.kubernetes.io/name: llm-throughput-lab
+    app.kubernetes.io/version: "2"

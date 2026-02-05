@@ -96,9 +96,11 @@ With 4GB VRAM, throughput is mostly limited by **KV cache + concurrency**. Main 
 
 ---
 
-## Quick start — Chạy theo thứ tự
+## Quick start
 
-Lab **không dùng Kubernetes**. Chạy theo thứ tự: **Service → Management → Tests**.
+### Version 1 (process, single node)
+
+Chạy theo thứ tự: **Service → Management → Tests**.
 
 | Bước | Script | Terminal |
 |------|--------|----------|
@@ -106,7 +108,17 @@ Lab **không dùng Kubernetes**. Chạy theo thứ tự: **Service → Managemen
 | 2. Management | `./scripts/run_02_management.sh` | Terminal 2 |
 | 3. Tests | `./scripts/run_03_tests.sh` | Terminal 3 |
 
-Xem **[docs/run-guide.md](docs/run-guide.md)** — hướng dẫn chi tiết từng bước.
+Xem **[docs/run-guide.md](docs/run-guide.md)** — hướng dẫn chi tiết.
+
+### Version 2 (Docker + Kubernetes)
+
+| Bước | Lệnh |
+|------|------|
+| Build | `eval $(minikube docker-env) && ./v2/scripts/build_images.sh` |
+| Deploy | `./v2/scripts/deploy_k8s.sh` |
+| Test | `./scripts/run_loadtest.sh http://$(minikube ip):30081` |
+
+Xem **[v2/docs/run-guide-v2.md](v2/docs/run-guide-v2.md)** — hướng dẫn V2.
 
 ---
 

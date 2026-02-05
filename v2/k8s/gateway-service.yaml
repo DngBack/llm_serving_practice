@@ -1,0 +1,18 @@
+# v2: Gateway Service — NodePort for access from host (load test)
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: llm-lab
+  labels:
+    app: gateway
+spec:
+  type: NodePort
+  ports:
+    - port: 8001
+      targetPort: 8001
+      nodePort: 30081
+      protocol: TCP
+      name: http
+  selector:
+    app: gateway

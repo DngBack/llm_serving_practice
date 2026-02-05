@@ -1,0 +1,15 @@
+Method,Name,Error,Occurrences
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4476778110>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f447554d490>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4476766490>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4476730e10>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4475536d10>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f447673bd50>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f44767537d0>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectionRefusedError(111, 'Connection refused')",152
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f447675f410>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f447675d450>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f447673a410>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4476738810>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4475535a50>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
+POST,/v1/chat/completions [200/200],"ConnectTimeoutError(<HTTPConnection(host='192.168.49.2', port=30081) at 0x7f4476765150>, 'Connection to 192.168.49.2 timed out. (connect timeout=None)')",1
