@@ -1,6 +1,6 @@
 {
   "annotations": {"list": []},
-  "description": "Milestone 3: vLLM observability for throughput lab",
+  "description": "M3+M6+M7: vLLM + Gateway observability (queue, worker state, auto-scale)",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -147,6 +147,56 @@
       ],
       "title": "Request Success (by finish_reason: stop, length, abort)",
       "type": "timeseries"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "palette-classic"},
+          "custom": {"drawStyle": "line", "fillOpacity": 0, "lineWidth": 1}
+        }
+      },
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "id": 7,
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}},
+      "targets": [
+        {
+          "expr": "gateway_queue_depth",
+          "legendFormat": "Queue Depth",
+          "refId": "A"
+        },
+        {
+          "expr": "gateway_in_flight",
+          "legendFormat": "In-Flight",
+          "refId": "B"
+        }
+      ],
+      "title": "Gateway Queue (drives admission 429, degradation)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "thresholds"},
+          "mappings": [
+            {"options": {"0": {"color": "gray", "index": 0, "text": "idle"}, "1": {"color": "yellow", "index": 1, "text": "starting"}, "2": {"color": "green", "index": 2, "text": "running"}, "3": {"color": "orange", "index": 3, "text": "stopping"}}, "type": "value"}
+          ],
+          "thresholds": {"mode": "absolute", "steps": [{"color": "gray", "value": null}, {"color": "green", "value": 1}]}
+        }
+      },
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+      "id": 8,
+      "options": {"colorMode": "value", "graphMode": "none"},
+      "targets": [
+        {
+          "expr": "gateway_worker_state",
+          "legendFormat": "Worker",
+          "refId": "A"
+        }
+      ],
+      "title": "Gateway Worker State (scale-to-zero)",
+      "type": "stat"
     }
   ],
   "refresh": "10s",
@@ -154,7 +204,7 @@
   "tags": ["vllm", "milestone3"],
   "templating": {"list": []},
   "time": {"from": "now-15m", "to": "now"},
-  "title": "vLLM Lab — M3 Observability",
+  "title": "vLLM Lab — Observability + Auto-scale",
   "uid": "vllm-lab-m3",
   "version": 1
 }

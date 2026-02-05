@@ -1,8 +1,10 @@
-# Prometheus config for Milestone 3 — Observability
-# Scrapes vLLM worker metrics from host machine.
+# Prometheus config for Milestone 3 + M6/M7 — Observability
+# Scrapes vLLM worker + Gateway metrics from host machine.
 #
-# Note: vLLM runs on host (e.g. localhost:8000). Docker uses
-# host.docker.internal (with extra_hosts) to reach the host.
+# Metrics drive auto-scale decisions:
+#   - gateway_queue_depth: queue sâu → admission 429, degradation
+#   - gateway_worker_state: 0=idle, 1=starting, 2=running, 3=stopping
+#   - vllm:num_requests_waiting, vllm:e2e_request_latency_seconds, etc.
 
 global:
   scrape_interval: 15s
@@ -11,7 +13,12 @@ global:
 scrape_configs:
   - job_name: "vllm"
     static_configs:
-      # host.docker.internal resolves to host IP (requires extra_hosts in compose)
       - targets: ["host.docker.internal:8000"]
     metrics_path: /metrics
     scrape_interval: 10s
+
+  - job_name: "gateway"
+    static_configs:
+      - targets: ["host.docker.internal:8001"]
+    metrics_path: /metrics
+    scrape_interval: 5s

@@ -96,6 +96,20 @@ With 4GB VRAM, throughput is mostly limited by **KV cache + concurrency**. Main 
 
 ---
 
+## Quick start — Chạy theo thứ tự
+
+Lab **không dùng Kubernetes**. Chạy theo thứ tự: **Service → Management → Tests**.
+
+| Bước | Script | Terminal |
+|------|--------|----------|
+| 1. Service | `./scripts/run_01_services.sh` | Terminal 1 |
+| 2. Management | `./scripts/run_02_management.sh` | Terminal 2 |
+| 3. Tests | `./scripts/run_03_tests.sh` | Terminal 3 |
+
+Xem **[docs/run-guide.md](docs/run-guide.md)** — hướng dẫn chi tiết từng bước.
+
+---
+
 ## Getting started — Milestone 1 (baseline serving)
 
 1. **Install vLLM** (GPU with CUDA required):
@@ -179,6 +193,30 @@ See **[docs/milestone4-5-guide.md](docs/milestone4-5-guide.md)** for detailed gu
 3. Load test qua gateway: `./scripts/run_loadtest.sh http://localhost:8001`
 
 See **[docs/milestone4-5-guide.md](docs/milestone4-5-guide.md)** for details.
+
+---
+
+## Milestone 6 — Autoscale (scale-to-zero)
+
+1. **Chạy gateway với supervisor** (gateway tự start/stop vLLM theo nhu cầu):
+   ```bash
+   ENABLE_SUPERVISOR=1 ./scripts/run_gateway.sh
+   ```
+   Không cần chạy `run_vllm_worker.sh` trước. Request đầu tiên sẽ trigger cold start (vài giây).
+2. Sau **180 giây** không có request, worker tự tắt. Request tiếp theo lại start worker.
+3. Kiểm tra: `curl http://localhost:8001/health` (có `worker_state`), `curl http://localhost:8001/metrics`.
+
+See **[docs/milestone6-7-guide.md](docs/milestone6-7-guide.md)** for detailed guide.
+
+---
+
+## Milestone 7 — Admission control + degradation
+
+1. **Admission**: Khi `queue_depth > Q_MAX` (mặc định 128), gateway trả **429** + header `Retry-After`.
+2. **Degradation**: Khi queue sâu, gateway giảm `max_tokens` theo bậc (200→128→96→64) và log tier.
+3. Tùy chỉnh: `Q_MAX=64 ./scripts/run_gateway.sh`
+
+See **[docs/milestone6-7-guide.md](docs/milestone6-7-guide.md)** for details.
 
 ---
 
