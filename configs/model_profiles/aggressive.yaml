@@ -1,0 +1,6 @@
+# Profile: aggressive — thử nghiệm mạnh hơn (dễ OOM trên 4GB)
+max_model_len: 512
+max_num_seqs: 192
+max_num_batched_tokens: 12288
+gpu_memory_utilization: 0.9
+enable_chunked_prefill: true

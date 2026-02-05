@@ -1,0 +1,6 @@
+# Profile: safe — bảo thủ, tránh OOM (Milestone 4)
+max_model_len: 512
+max_num_seqs: 64
+max_num_batched_tokens: 4096
+gpu_memory_utilization: 0.85
+enable_chunked_prefill: true

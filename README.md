@@ -146,6 +146,42 @@ See **[docs/milestone3-guide.md](docs/milestone3-guide.md)** for detailed implem
 
 ---
 
+## Milestone 4 — Throughput optimization (grid search)
+
+1. **Chạy grid search** (sweep `max_num_seqs` × `max_num_batched_tokens`):
+   ```bash
+   # Chạy 1 config (vLLM đang chạy với env)
+   VLLM_MAX_NUM_SEQS=128 VLLM_MAX_NUM_BATCHED_TOKENS=8192 ./scripts/run_vllm_worker.sh
+   python scripts/tune_grid.py --single
+
+   # Full grid (tự động spawn vLLM từng config)
+   python scripts/tune_grid.py
+   QUICK=1 python scripts/tune_grid.py  # chạy nhanh 1 phút/config
+   ```
+2. Kết quả: `experiments/runs/grid_*.json` — best config theo SLO (p95 ≤ 5s).
+
+See **[docs/milestone4-5-guide.md](docs/milestone4-5-guide.md)** for detailed guide.
+
+---
+
+## Milestone 5 — Micro-batching at gateway
+
+1. **Chạy gateway** với batching window:
+   ```bash
+   ./scripts/run_vllm_worker.sh   # vLLM trên :8000
+   ./scripts/run_gateway.sh       # Gateway trên :8001 (BATCH_WINDOW_MS=0)
+   BATCH_WINDOW_MS=20 ./scripts/run_gateway.sh
+   ```
+2. **A/B test** window 0 vs 20 vs 50 ms:
+   ```bash
+   ./scripts/run_batch_abtest.sh
+   ```
+3. Load test qua gateway: `./scripts/run_loadtest.sh http://localhost:8001`
+
+See **[docs/milestone4-5-guide.md](docs/milestone4-5-guide.md)** for details.
+
+---
+
 ## Project Structure (Planned)
 
 See **[docs/plan.md](docs/plan.md)** for the full milestone to-do list, detailed directory layout, conventions, and critical review. Summary:

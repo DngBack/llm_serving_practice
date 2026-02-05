@@ -3,3 +3,11 @@ vllm==0.15.0
 
 # Load-test harness
 locust>=2.0
+
+# M4 grid search (profile loading)
+pyyaml>=6.0
+
+# M5 gateway
+fastapi>=0.100.0
+uvicorn>=0.22.0
+httpx>=0.24.0
