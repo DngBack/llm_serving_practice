@@ -1,0 +1,17 @@
+# Prometheus config for Milestone 3 — Observability
+# Scrapes vLLM worker metrics from host machine.
+#
+# Note: vLLM runs on host (e.g. localhost:8000). Docker uses
+# host.docker.internal (with extra_hosts) to reach the host.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+
+scrape_configs:
+  - job_name: "vllm"
+    static_configs:
+      # host.docker.internal resolves to host IP (requires extra_hosts in compose)
+      - targets: ["host.docker.internal:8000"]
+    metrics_path: /metrics
+    scrape_interval: 10s
